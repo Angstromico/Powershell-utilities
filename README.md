@@ -35,6 +35,36 @@ New-GitFirstCommit -RepoUrl "https://github.com/username/repo.git"
 New-GitFirstCommit -RepoUrl "https://github.com/john/myproject.git" -CommitMessage "Initial setup"
 ```
 
+### Windows
+
+**File:** `windows.ps1`
+
+#### `Reset-IconCache`
+
+Resets the Windows icon cache when icons are appearing incorrectly, broken, or not updating. This process involves:
+- Stopping the Windows Explorer process
+- Deleting the `IconCache.db` and Explorer icon cache databases
+- Restarting Windows Explorer
+
+**When to use it:**
+- Desktop icons are blank or showing generic icons
+- Custom folder icons aren't updating
+- File association icons are incorrect
+
+**Usage:**
+```powershell
+. ./windows.ps1
+Reset-IconCache
+```
+
+**Parameters:**
+- `-Verbose` (optional): Show detailed steps of the operation
+
+**Example:**
+```powershell
+Reset-IconCache -Verbose
+```
+
 ## Future Plans
 
 This repository will grow to include:
