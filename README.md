@@ -2,11 +2,23 @@
 
 A collection of PowerShell scripts to simplify CLI workflows and automate common development tasks.
 
+## Repository Structure
+
+```text
+C:\Users\Manuel Morales\Repos\PowerShell\
+├── scripts/
+│   ├── git.ps1
+│   └── windows.ps1
+├── README.md
+└── .vscode/
+    └── settings.json
+```
+
 ## Current Commands
 
 ### Git
 
-**File:** `git.ps1`
+**File:** `scripts/git.ps1`
 
 #### `New-GitFirstCommit`
 
@@ -22,7 +34,7 @@ Automates the initial setup of a new Git repository in one command:
 > **Note:** You must dot-source the script first (the `.` at the beginning is required):
 
 ```powershell
-. ./git.ps1
+. ./scripts/git.ps1
 New-GitFirstCommit -RepoUrl "https://github.com/username/repo.git"
 ```
 
@@ -37,7 +49,7 @@ New-GitFirstCommit -RepoUrl "https://github.com/john/myproject.git" -CommitMessa
 
 ### Windows
 
-**File:** `windows.ps1`
+**File:** `scripts/windows.ps1`
 
 #### `Reset-IconCache`
 
@@ -53,7 +65,7 @@ Resets the Windows icon cache when icons are appearing incorrectly, broken, or n
 
 **Usage:**
 ```powershell
-. ./windows.ps1
+. ./scripts/windows.ps1
 Reset-IconCache
 ```
 
@@ -82,7 +94,7 @@ This repository will grow to include:
 1. Clone this repository
 2. Source the script you need:
    ```powershell
-   . ./git.ps1
+   . ./scripts/git.ps1
    ```
 3. Run the functions directly in your PowerShell session
 
@@ -101,18 +113,13 @@ To make these functions available in **every PowerShell session** from any direc
 
 2. Add this line to the profile file:
    ```powershell
-   . "C:\Users\Manuel Morales\Repos\PowerShell\git.ps1"
+   . "C:\Users\Manuel Morales\Repos\PowerShell\scripts\git.ps1"
+   . "C:\Users\Manuel Morales\Repos\PowerShell\scripts\windows.ps1"
    ```
 
 3. Save and **restart PowerShell**
 
-Now `New-GitFirstCommit` will work from any folder without sourcing.
-
-**For future scripts**, just add more lines to your profile:
-```powershell
-. "C:\Users\Manuel Morales\Repos\PowerShell\docker.ps1"
-. "C:\Users\Manuel Morales\Repos\PowerShell\aws.ps1"
-```
+Now all functions from both `git.ps1` and `windows.ps1` will work from any folder without sourcing.
 
 ## Requirements
 
