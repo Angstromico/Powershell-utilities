@@ -66,3 +66,7 @@ function Reset-IconCache {
         }
     }
 }
+
+function newps {
+    Start-Process powershell
+}
