@@ -37,3 +37,9 @@ function New-GitFirstCommit {
 
     Write-Host "✅ Repository initialized and pushed successfully." -ForegroundColor Green
 }
+
+
+function newps {
+    Start-Process powershell
+}
+
