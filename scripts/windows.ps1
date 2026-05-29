@@ -95,3 +95,49 @@ function Get-HardwareSummary {
         }
     }
 }
+
+function Clear-SystemJunk {
+    <#
+    .SYNOPSIS
+        Safely clears temporary files and Windows Update installer cache.
+    .DESCRIPTION
+        Requires Administrative privileges. Cleans:
+        - User Temp folder ($env:TEMP)
+        - Windows System Temp folder (C:\Windows\Temp)
+        - Windows Prefetch (C:\Windows\Prefetch)
+        - Windows Update Download cache (C:\Windows\SoftwareDistribution\Download)
+    #>
+    [CmdletBinding()]
+    param()
+
+    process {
+        $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+        if (-not $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+            Write-Error "This function requires Administrative privileges. Please restart PowerShell as Administrator."
+            return
+        }
+
+        $targets = @(
+            $env:TEMP,
+            "C:\Windows\Temp",
+            "C:\Windows\Prefetch",
+            "C:\Windows\SoftwareDistribution\Download"
+        )
+
+        foreach ($folder in $targets) {
+            if (Test-Path $folder) {
+                Write-Host "Cleaning: $folder..." -ForegroundColor Cyan
+                try {
+                    # Get all items inside the folder and attempt to remove them
+                    Get-ChildItem -Path $folder -Recurse -ErrorAction SilentlyContinue | 
+                        Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+                    Write-Host "  Done." -ForegroundColor Green
+                }
+                catch {
+                    Write-Warning "  Some files in $folder could not be deleted (they may be in use)."
+                }
+            }
+        }
+        Write-Host "System cleanup complete!" -ForegroundColor Cyan
+    }
+}

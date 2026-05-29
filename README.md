@@ -96,6 +96,24 @@ GPU    : NVIDIA GeForce RTX 4090
 Disk_C : 450.23 GB free of 953.12 GB
 ```
 
+#### `Clear-SystemJunk`
+
+Safely removes temporary files and Windows Update installer caches to free up disk space. 
+
+**Directories Cleaned:**
+- User Temporary files (`$env:TEMP`)
+- Windows System Temporary files (`C:\Windows\Temp`)
+- Windows Prefetch data (`C:\Windows\Prefetch`)
+- Windows Update Download cache (`C:\Windows\SoftwareDistribution\Download`)
+
+> **Note:** This function requires **Administrative privileges** to access system directories.
+
+**Usage:**
+```powershell
+. ./scripts/windows.ps1
+Clear-SystemJunk
+```
+
 ## Future Plans
 
 This repository will grow to include:
