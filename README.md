@@ -47,6 +47,33 @@ New-GitFirstCommit -RepoUrl "https://github.com/username/repo.git"
 New-GitFirstCommit -RepoUrl "https://github.com/john/myproject.git" -CommitMessage "Initial setup"
 ```
 
+#### `Invoke-GitCommitPush`
+
+Automates the commit and push workflow with a colorful interface:
+- Stages all changes
+- Creates a commit with conventional commit format (`type: message`)
+- Pulls latest changes with rebase to prevent conflicts
+- Pushes to the current branch
+
+**Usage:**
+> **Note:** You must dot-source the script first (the `.` at the beginning is required):
+
+```powershell
+. ./scripts/git.ps1
+Invoke-GitCommitPush -Type "feat" -Message "Add user authentication"
+```
+
+**Parameters:**
+- `-Type` (required): Commit type following conventional commits. Valid values: `feat`, `bugfix`, `chore`, `docs`, `refactor`
+- `-Message` (required): The commit message describing the change
+
+**Examples:**
+```powershell
+Invoke-GitCommitPush -Type "feat" -Message "Add user authentication"
+Invoke-GitCommitPush -Type "bugfix" -Message "Fix login redirect issue"
+Invoke-GitCommitPush -Type "docs" -Message "Update README installation steps"
+```
+
 ### Windows
 
 **File:** `scripts/windows.ps1`

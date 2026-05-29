@@ -38,3 +38,50 @@ function New-GitFirstCommit {
     Write-Host "✅ Repository initialized and pushed successfully." -ForegroundColor Green
 }
 
+function Invoke-GitCommitPush {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)]
+        [ValidateSet("feat", "bugfix", "chore", "docs", "refactor")]
+        [string]$Type,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Message
+    )
+
+    if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+        throw "Git is not installed or not in PATH."
+    }
+
+    $branch = git rev-parse --abbrev-ref HEAD 2>$null
+    if ([string]::IsNullOrEmpty($branch)) {
+        throw "Not inside a Git repository."
+    }
+
+    Write-Host "Let's launch your code to GitHub!" -ForegroundColor Magenta
+    Write-Host ""
+    Write-Host "Branch: " -NoNewline -ForegroundColor Cyan
+    Write-Host $branch -ForegroundColor Yellow
+    Write-Host "Commit type: " -NoNewline -ForegroundColor Cyan
+    Write-Host $Type -ForegroundColor Yellow
+    Write-Host "Message: " -NoNewline -ForegroundColor Cyan
+    Write-Host $Message -ForegroundColor Green
+    Write-Host ""
+
+    Write-Host "Staging all changes..." -ForegroundColor Blue
+    git add .
+
+    Write-Host "Creating commit..." -ForegroundColor Blue
+    git commit -m "$Type`: $Message"
+
+    Write-Host "Pulling latest changes from origin/$branch..." -ForegroundColor Blue
+    git pull origin $branch --rebase
+
+    Write-Host "Pushing to origin/$branch..." -ForegroundColor Blue
+    git push origin $branch
+
+    Write-Host ""
+    Write-Host "All done! Your code is now live on GitHub." -ForegroundColor Green
+}
+
