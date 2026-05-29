@@ -77,6 +77,25 @@ Reset-IconCache
 Reset-IconCache -Verbose
 ```
 
+#### `Get-HardwareSummary`
+
+Provides a concise summary of the computer's hardware, including OS version, CPU model, total RAM, GPU, and C: drive space.
+
+**Usage:**
+```powershell
+. ./scripts/windows.ps1
+Get-HardwareSummary
+```
+
+**Output Example:**
+```text
+OS     : Microsoft Windows 11 Pro
+CPU    : 13th Gen Intel(R) Core(TM) i9-13900K
+RAM    : 64 GB
+GPU    : NVIDIA GeForce RTX 4090
+Disk_C : 450.23 GB free of 953.12 GB
+```
+
 ## Future Plans
 
 This repository will grow to include:

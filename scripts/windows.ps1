@@ -70,3 +70,28 @@ function Reset-IconCache {
 function newps {
     Start-Process powershell
 }
+
+function Get-HardwareSummary {
+    <#
+    .SYNOPSIS
+        Provides a brief summary of the computer's hardware.
+    #>
+    [CmdletBinding()]
+    param()
+
+    process {
+        $os = Get-CimInstance Win32_OperatingSystem
+        $cpu = Get-CimInstance Win32_Processor | Select-Object -First 1
+        $memory = Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum
+        $disk = Get-CimInstance Win32_LogicalDisk -Filter "DeviceID='C:'"
+        $gpu = Get-CimInstance Win32_VideoController | Select-Object -First 1
+
+        [PSCustomObject]@{
+            OS     = $os.Caption
+            CPU    = $cpu.Name.Trim()
+            RAM    = "$([Math]::Round($memory.Sum / 1GB, 2)) GB"
+            GPU    = $gpu.Name
+            Disk_C = "$([Math]::Round($disk.FreeSpace / 1GB, 2)) GB free of $([Math]::Round($disk.Size / 1GB, 2)) GB"
+        }
+    }
+}
