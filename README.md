@@ -74,6 +74,30 @@ Invoke-GitCommitPush -Type "bugfix" -Message "Fix login redirect issue"
 Invoke-GitCommitPush -Type "docs" -Message "Update README installation steps"
 ```
 
+#### `Invoke-GitHardReset`
+
+Forces the local repository to match the state of a remote branch:
+- Fetches the latest updates from the remote
+- Performs a hard reset to the specified remote branch
+- **Warning:** This will discard all uncommitted local changes
+
+**Usage:**
+```powershell
+. ./scripts/git.ps1
+Invoke-GitHardReset -Branch "main"
+```
+
+**Parameters:**
+- `-Branch` (optional): The remote branch to reset to (default: `"main"`)
+- `-Remote` (optional): The remote name (default: `"origin"`)
+
+**Examples:**
+```powershell
+Invoke-GitHardReset                       # Resets current branch to origin/main
+Invoke-GitHardReset -Branch "develop"     # Resets current branch to origin/develop
+Invoke-GitHardReset -Branch "feat-ui" -Remote "upstream"
+```
+
 ### Windows
 
 **File:** `scripts/windows.ps1`

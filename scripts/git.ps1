@@ -85,3 +85,40 @@ function Invoke-GitCommitPush {
     Write-Host "All done! Your code is now live on GitHub." -ForegroundColor Green
 }
 
+function Invoke-GitHardReset {
+    [CmdletBinding()]
+    param (
+        [string]$Branch = "main",
+        [string]$Remote = "origin"
+    )
+
+    if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+        throw "Git is not installed or not in PATH."
+    }
+
+    $currentBranch = git rev-parse --abbrev-ref HEAD 2>$null
+    if ([string]::IsNullOrEmpty($currentBranch)) {
+        throw "Not inside a Git repository."
+    }
+
+    Write-Host "Resetting current branch to $Remote/$Branch..." -ForegroundColor Magenta
+    Write-Host ""
+
+    Write-Host "Fetching latest changes from $Remote..." -ForegroundColor Blue
+    git fetch $Remote
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Failed to fetch from $Remote."
+    }
+
+    Write-Host "Performing hard reset to $Remote/$Branch..." -ForegroundColor Blue
+    git reset --hard "$Remote/$Branch"
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Failed to reset to $Remote/$Branch. Ensure the branch exists on the remote."
+    }
+
+    Write-Host ""
+    Write-Host "✅ Successfully reset to $Remote/$Branch." -ForegroundColor Green
+}
+
