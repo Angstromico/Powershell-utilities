@@ -145,3 +145,20 @@ gco -Branch "develop"
 gco -Branch "feat-ui" -Remote "upstream"
 ```
 
+---
+
+### `gpr`
+
+A shortcut to pull the latest changes with rebase and autostash:
+- Pulls latest changes from the current branch
+- Uses `--rebase` to keep a linear history
+- Uses `--autostash` to automatically stash and pop local changes
+
+**Usage:**
+```powershell
+gpr
+```
+
+**Description:**
+This command executes `git pull -r --autostash`. It's particularly useful when you have uncommitted changes and want to sync with the remote without manually stashing.
+
