@@ -160,3 +160,55 @@ function Invoke-GitRebase {
     Write-Host "✅ Successfully rebased onto $Remote/$BaseBranch." -ForegroundColor Green
 }
 
+function Invoke-GitCheckoutRemote {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$Branch,
+
+        [string]$Remote = "origin"
+    )
+
+    if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+        throw "Git is not installed or not in PATH."
+    }
+
+    Write-Host "Fetching latest branches from $Remote..." -ForegroundColor Blue
+    git fetch $Remote
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Failed to fetch from $Remote."
+    }
+
+    # Check if remote branch exists
+    $remoteExists = git ls-remote --heads $Remote $Branch
+
+    if (-not $remoteExists) {
+        throw "Branch '$Branch' does not exist on $Remote."
+    }
+
+    # Check if local branch already exists
+    $localExists = git branch --list $Branch
+
+    if ($localExists) {
+        Write-Host "Local branch exists. Switching to $Branch..." -ForegroundColor Yellow
+        git checkout $Branch
+
+        Write-Host "Pulling latest changes..." -ForegroundColor Blue
+        git pull $Remote $Branch
+    }
+    else {
+        Write-Host "Creating and tracking $Remote/$Branch..." -ForegroundColor Yellow
+        git checkout -b $Branch "$Remote/$Branch"
+    }
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Failed to checkout branch '$Branch'."
+    }
+
+    Write-Host ""
+    Write-Host "✅ Now on branch '$Branch' with latest from $Remote." -ForegroundColor Green
+}
+
+Set-Alias gco Invoke-GitCheckoutRemote
+
