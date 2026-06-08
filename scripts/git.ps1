@@ -226,3 +226,9 @@ function gpr {
     git pull -r --autostash
 }
 
+
+function gps {
+    git push --force-with-lease
+}
+
+
