@@ -212,3 +212,7 @@ function Invoke-GitCheckoutRemote {
 
 Set-Alias gco Invoke-GitCheckoutRemote
 
+function gpr {
+    git pull -r --autostash
+}
+
