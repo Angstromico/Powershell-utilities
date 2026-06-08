@@ -6,6 +6,8 @@ A collection of PowerShell scripts to simplify CLI workflows and automate common
 
 ```text
 C:\Users\Manuel Morales\Repos\PowerShell\
+├── alias/
+│   └── git.ps1
 ├── docs/
 │   ├── git.md
 │   └── windows.md
@@ -23,6 +25,17 @@ Detailed documentation for each function category can be found in the `docs/` fo
 
 - [**Git Utilities**](docs/git.md) - Repository initialization, commits, and resets.
 - [**Windows Utilities**](docs/windows.md) - System cleanup, icon cache resets, and hardware summaries.
+
+## Aliases
+
+In addition to the main scripts, this repository includes an `alias/` folder with standalone alias definitions. These are intended for quick keyboard shortcuts to the functions or common Git commands.
+
+Example: `gco` for `Invoke-GitCheckoutRemote`.
+
+To use them, dot-source them in your profile or session:
+```powershell
+. ./alias/git.ps1
+```
 
 ## Installation
 

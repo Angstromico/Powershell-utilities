@@ -6,6 +6,8 @@ Documentation for functions located in `scripts/git.ps1`.
 
 ## Commands
 
+> **Note:** Common aliases for these commands are also defined in the `alias/` folder for easier session management.
+
 ### `New-GitFirstCommit`
 
 Automates the initial setup of a new Git repository in one command:
