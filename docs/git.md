@@ -113,3 +113,33 @@ Invoke-GitRebase                       # Rebases current branch onto origin/main
 Invoke-GitRebase -BaseBranch "develop" # Rebases current branch onto origin/develop
 Invoke-GitRebase -BaseBranch "main" -Remote "upstream"
 ```
+
+---
+
+### `Invoke-GitCheckoutRemote` (Alias: `gco`)
+
+Safely checkouts a remote branch, creating it locally if it doesn't exist or pulling updates if it does:
+- Fetches the latest branches from the remote
+- Verifies if the branch exists on the remote
+- If local branch exists: switches to it and pulls updates
+- If local branch doesn't exist: creates it and tracks the remote counterpart
+
+**Usage:**
+```powershell
+. ./scripts/git.ps1
+Invoke-GitCheckoutRemote -Branch "feature-abc"
+# Or using the alias:
+gco -Branch "feature-abc"
+```
+
+**Parameters:**
+- `-Branch` (required): The name of the branch to checkout
+- `-Remote` (optional): The remote name (default: `"origin"`)
+
+**Examples:**
+```powershell
+Invoke-GitCheckoutRemote -Branch "main"
+gco -Branch "develop"
+gco -Branch "feat-ui" -Remote "upstream"
+```
+
