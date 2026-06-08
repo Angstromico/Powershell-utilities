@@ -162,3 +162,19 @@ gpr
 **Description:**
 This command executes `git pull -r --autostash`. It's particularly useful when you have uncommitted changes and want to sync with the remote without manually stashing.
 
+---
+
+### `gps`
+
+A shortcut to push local changes to the remote repository using `force-with-lease`:
+- Pushes the current branch to the remote.
+- Uses `--force-with-lease` for a safer force push, ensuring you don't overwrite work you haven't seen yet.
+
+**Usage:**
+```powershell
+gps
+```
+
+**Description:**
+This command executes `git push --force-with-lease`. It is recommended over a standard `force` push as it verifies that your local representation of the remote branch matches the actual remote branch before proceeding.
+
