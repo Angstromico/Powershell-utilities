@@ -148,11 +148,21 @@ function Invoke-GitRebase {
         throw "Failed to fetch from $Remote."
     }
 
+    # ✅ Validate branch exists
+    $remoteBranchExists = git ls-remote --heads $Remote $BaseBranch
+    if (-not $remoteBranchExists) {
+        throw "Remote branch '$Remote/$BaseBranch' does not exist."
+    }
+
     Write-Host "Performing rebase of $Remote/$BaseBranch into $currentBranch..." -ForegroundColor Blue
-    git rebase "$Remote/$BaseBranch"
+
+    git rebase "$Remote/$BaseBranch" 2>&1 | ForEach-Object { Write-Host $_ }
 
     if ($LASTEXITCODE -ne 0) {
-        Write-Host "⚠️ Rebase failed or has conflicts. Please resolve them manually." -ForegroundColor Red
+        Write-Host ""
+        Write-Host "⚠️ Rebase failed. Resolve conflicts, then run:" -ForegroundColor Red
+        Write-Host "   git rebase --continue" -ForegroundColor Yellow
+        Write-Host "   (or 'git rebase --abort' to cancel)" -ForegroundColor Yellow
         return
     }
 
