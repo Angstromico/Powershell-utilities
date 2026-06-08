@@ -87,3 +87,29 @@ Invoke-GitHardReset                       # Resets current branch to origin/main
 Invoke-GitHardReset -Branch "develop"     # Resets current branch to origin/develop
 Invoke-GitHardReset -Branch "feat-ui" -Remote "upstream"
 ```
+
+---
+
+### `Invoke-GitRebase`
+
+Rebases a base branch (usually `main`) into the current branch:
+- Fetches the latest updates from the remote
+- Rebases the specified remote base branch into the current branch
+- Useful for keeping your feature branch up to date with the main branch
+
+**Usage:**
+```powershell
+. ./scripts/git.ps1
+Invoke-GitRebase -BaseBranch "main"
+```
+
+**Parameters:**
+- `-BaseBranch` (optional): The remote branch to rebase onto (default: `"main"`)
+- `-Remote` (optional): The remote name (default: `"origin"`)
+
+**Examples:**
+```powershell
+Invoke-GitRebase                       # Rebases current branch onto origin/main
+Invoke-GitRebase -BaseBranch "develop" # Rebases current branch onto origin/develop
+Invoke-GitRebase -BaseBranch "main" -Remote "upstream"
+```

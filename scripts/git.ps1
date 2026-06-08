@@ -122,3 +122,41 @@ function Invoke-GitHardReset {
     Write-Host "✅ Successfully reset to $Remote/$Branch." -ForegroundColor Green
 }
 
+function Invoke-GitRebase {
+    [CmdletBinding()]
+    param (
+        [string]$BaseBranch = "main",
+        [string]$Remote = "origin"
+    )
+
+    if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+        throw "Git is not installed or not in PATH."
+    }
+
+    $currentBranch = git rev-parse --abbrev-ref HEAD 2>$null
+    if ([string]::IsNullOrEmpty($currentBranch)) {
+        throw "Not inside a Git repository."
+    }
+
+    Write-Host "Rebasing $Remote/$BaseBranch into $currentBranch..." -ForegroundColor Magenta
+    Write-Host ""
+
+    Write-Host "Fetching latest changes from $Remote..." -ForegroundColor Blue
+    git fetch $Remote
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Failed to fetch from $Remote."
+    }
+
+    Write-Host "Performing rebase of $Remote/$BaseBranch into $currentBranch..." -ForegroundColor Blue
+    git rebase "$Remote/$BaseBranch"
+
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "⚠️ Rebase failed or has conflicts. Please resolve them manually." -ForegroundColor Red
+        return
+    }
+
+    Write-Host ""
+    Write-Host "✅ Successfully rebased onto $Remote/$BaseBranch." -ForegroundColor Green
+}
+
