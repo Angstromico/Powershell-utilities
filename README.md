@@ -7,11 +7,15 @@ A collection of PowerShell scripts to simplify CLI workflows and automate common
 ```text
 C:\Users\Manuel Morales\Repos\PowerShell\
 ├── alias/
+│   ├── curl.ps1
 │   └── git.ps1
 ├── docs/
+│   ├── aliases.md
+│   ├── files.md
 │   ├── git.md
 │   └── windows.md
 ├── scripts/
+│   ├── files.ps1
 │   ├── git.ps1
 │   └── windows.ps1
 ├── README.md
@@ -25,6 +29,8 @@ Detailed documentation for each function category can be found in the `docs/` fo
 
 - [**Git Utilities**](docs/git.md) - Repository initialization, commits, and resets.
 - [**Windows Utilities**](docs/windows.md) - System cleanup, icon cache resets, and hardware summaries.
+- [**File Utilities**](docs/files.md) - Exclude-based recursive copying and other file management tasks.
+- [**Aliases**](docs/aliases.md) - Override default native behaviors (curl) and shorten standard workflows (git).
 
 ## Aliases
 
@@ -35,6 +41,7 @@ Example: `gco` for `Invoke-GitCheckoutRemote`.
 To use them, dot-source them in your profile or session:
 ```powershell
 . ./alias/git.ps1
+. ./alias/curl.ps1
 ```
 
 ## Installation

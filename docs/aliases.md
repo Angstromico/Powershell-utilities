@@ -1,0 +1,59 @@
+# Alias Configurations Documentation
+
+Documentation for the standalone alias definitions and command overrides located in the `alias/` folder.
+
+---
+
+## Overview
+
+The `alias/` directory contains PowerShell scripts that define custom aliases, shorthand commands, and overrides to replace default Windows PowerShell behaviors with more intuitive or native commands.
+
+To use these aliases in your current session or permanently, see the [Installation and Usage](#installation-and-usage) section.
+
+---
+
+## Available Aliases
+
+### Native Curl Override (`alias/curl.ps1`)
+
+By default, Windows PowerShell maps the alias `curl` to `Invoke-WebRequest`, which behaves differently from the standard native `curl` utility. This script removes the default alias and re-maps `curl` directly to `curl.exe` (the native executable).
+
+* **Command**: `curl`
+* **Maps to**: `curl.exe`
+* **Purpose**: Restores standard curl behavior in PowerShell, allowing standard arguments/headers (like `-X`, `-H`, `-d`) to work as they would on Linux/macOS.
+
+---
+
+### Git Shorthands (`alias/git.ps1`)
+
+This script defines shorthand aliases for Git functions defined within the repository's main utility scripts.
+
+#### `gco`
+* **Maps to**: `Invoke-GitCheckoutRemote` (defined in `scripts/git.ps1`)
+* **Purpose**: Quickly search, select, and check out remote branches interactively.
+
+---
+
+## Installation and Usage
+
+To make these aliases available, dot-source them in your PowerShell profile or current session.
+
+### Sourcing in Current Session
+
+```powershell
+. ./alias/curl.ps1
+. ./alias/git.ps1
+```
+
+### Adding to your PowerShell Profile (Permanent)
+
+1. Open your PowerShell profile:
+   ```powershell
+   notepad $PROFILE
+   ```
+2. Append the following lines pointing to your local repository directory:
+   ```powershell
+   . "C:\Users\Manuel Morales\Repos\PowerShell\alias\curl.ps1"
+   . "C:\Users\Manuel Morales\Repos\PowerShell\alias\git.ps1"
+   ```
+3. Save and restart PowerShell.
