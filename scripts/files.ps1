@@ -20,10 +20,6 @@ function Copy-WithExclude {
     .EXAMPLE
         Copy-WithExclude -DestinationPath "C:\Backup" -Exclude "node_modules", "bin"
         Copies the current directory to C:\Backup, skipping any "node_modules" or "bin" folders/files.
-
-    .EXAMPLE
-        Copy-WithExclude -SourcePath ".\src" -DestinationPath ".\dist" -Exclude "test"
-        Copies the src directory to dist, skipping any items with "test" in their name.
     #>
     [CmdletBinding()]
     param(
@@ -50,30 +46,42 @@ function Copy-WithExclude {
         Write-Verbose "Copying from $sourceFullPath to $destinationFullPath"
         Write-Verbose "Excluding keywords: $($Exclude -join ', ')"
 
-        $items = Get-ChildItem -Path $sourceFullPath -Recurse
+        # Función interna recursiva optimizada para filtrar antes de escanear el subárbol
+        function Get-FilteredItems {
+            param($CurrentPath, $ExcludeKeywords)
 
+            foreach ($item in Get-ChildItem -Path $CurrentPath -Force -ErrorAction SilentlyContinue) {
+                $skip = $false
+                foreach ($keyword in $ExcludeKeywords) {
+                    if ($item.Name -like "*$keyword*") {
+                        $skip = $true
+                        break
+                    }
+                }
+
+                if ($skip) { 
+                    Write-Verbose "Skipping directory scan/copy for: $($item.FullName)"
+                    continue 
+                }
+
+                # Devolvemos el ítem actual válido
+                $item
+
+                # Si es una carpeta, entramos recursivamente de forma controlada
+                if ($item.PSIsContainer) {
+                    Get-FilteredItems -CurrentPath $item.FullName -ExcludeKeywords $ExcludeKeywords
+                }
+            }
+        }
+
+        # Obtenemos los ítems de manera inteligente
+        $items = Get-FilteredItems -CurrentPath $sourceFullPath -ExcludeKeywords $Exclude
+
+        # Procesamos la copia de los elementos filtrados
         foreach ($item in $items) {
             $relativePath = $item.FullName.Substring($sourceFullPath.Length).TrimStart('\')
             
             if ([string]::IsNullOrWhiteSpace($relativePath)) { continue }
-
-            $shouldExclude = $false
-            $pathSegments = $relativePath -split '\\'
-            
-            foreach ($segment in $pathSegments) {
-                foreach ($keyword in $Exclude) {
-                    if ($segment -like "*$keyword*") {
-                        $shouldExclude = $true
-                        break
-                    }
-                }
-                if ($shouldExclude) { break }
-            }
-
-            if ($shouldExclude) {
-                Write-Verbose "Excluding: $relativePath"
-                continue
-            }
 
             $targetPath = Join-Path $destinationFullPath $relativePath
             
