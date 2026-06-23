@@ -13,10 +13,12 @@ C:\Users\Manuel Morales\Repos\PowerShell\
 │   ├── aliases.md
 │   ├── files.md
 │   ├── git.md
+│   ├── programs.md
 │   └── windows.md
 ├── scripts/
 │   ├── files.ps1
 │   ├── git.ps1
+│   ├── programs.ps1
 │   └── windows.ps1
 ├── README.md
 └── .vscode/
@@ -30,6 +32,7 @@ Detailed documentation for each function category can be found in the `docs/` fo
 - [**Git Utilities**](docs/git.md) - Repository initialization, commits, and resets.
 - [**Windows Utilities**](docs/windows.md) - System cleanup, icon cache resets, and hardware summaries.
 - [**File Utilities**](docs/files.md) - Exclude-based recursive copying and other file management tasks.
+- [**Programs Utilities**](docs/programs.md) - Launching Vim from a Git-for-Windows path and other program shortcuts.
 - [**Aliases**](docs/aliases.md) - Override default native behaviors (curl) and shorten standard workflows (git).
 
 ## Aliases
@@ -39,6 +42,7 @@ In addition to the main scripts, this repository includes an `alias/` folder wit
 Example: `gco` for `Invoke-GitCheckoutRemote`.
 
 To use them, dot-source them in your profile or session:
+
 ```powershell
 . ./alias/git.ps1
 . ./alias/curl.ps1
@@ -60,15 +64,19 @@ To use them, dot-source them in your profile or session:
 To make these functions available in **every PowerShell session** from any directory:
 
 1. Open your PowerShell profile:
+
    ```powershell
    notepad $PROFILE
    ```
+
    If the file doesn't exist, create it first:
+
    ```powershell
    if (!(Test-Path $PROFILE)) { New-Item -Path $PROFILE -ItemType File -Force }
    ```
 
 2. Add this line to the profile file:
+
    ```powershell
    . "C:\Users\Manuel Morales\Repos\PowerShell\scripts\git.ps1"
    . "C:\Users\Manuel Morales\Repos\PowerShell\scripts\windows.ps1"
