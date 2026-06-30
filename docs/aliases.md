@@ -18,9 +18,9 @@ To use these aliases in your current session or permanently, see the [Installati
 
 By default, Windows PowerShell maps the alias `curl` to `Invoke-WebRequest`, which behaves differently from the standard native `curl` utility. This script removes the default alias and re-maps `curl` directly to `curl.exe` (the native executable).
 
-* **Command**: `curl`
-* **Maps to**: `curl.exe`
-* **Purpose**: Restores standard curl behavior in PowerShell, allowing standard arguments/headers (like `-X`, `-H`, `-d`) to work as they would on Linux/macOS.
+- **Command**: `curl`
+- **Maps to**: `curl.exe`
+- **Purpose**: Restores standard curl behavior in PowerShell, allowing standard arguments/headers (like `-X`, `-H`, `-d`) to work as they would on Linux/macOS.
 
 ---
 
@@ -29,8 +29,19 @@ By default, Windows PowerShell maps the alias `curl` to `Invoke-WebRequest`, whi
 This script defines shorthand aliases for Git functions defined within the repository's main utility scripts.
 
 #### `gco`
-* **Maps to**: `Invoke-GitCheckoutRemote` (defined in `scripts/git.ps1`)
-* **Purpose**: Quickly search, select, and check out remote branches interactively.
+
+- **Maps to**: `Invoke-GitCheckoutRemote` (defined in `scripts/git.ps1`)
+- **Purpose**: Quickly search, select, and check out remote branches interactively.
+
+---
+
+### Lua Alias (`alias/lua.ps1`)
+
+This script creates a `lua` alias that points to `lua55`, which can be useful when the Lua 5.5 executable is installed but you prefer the shorter command name.
+
+- **Command**: `lua`
+- **Maps to**: `lua55`
+- **Purpose**: Provides a more convenient alias for invoking Lua 5.5 from PowerShell.
 
 ---
 
@@ -43,6 +54,7 @@ To make these aliases available, dot-source them in your PowerShell profile or c
 ```powershell
 . ./alias/curl.ps1
 . ./alias/git.ps1
+. ./alias/lua.ps1
 ```
 
 ### Adding to your PowerShell Profile (Permanent)
@@ -55,5 +67,6 @@ To make these aliases available, dot-source them in your PowerShell profile or c
    ```powershell
    . "C:\Users\Manuel Morales\Repos\PowerShell\alias\curl.ps1"
    . "C:\Users\Manuel Morales\Repos\PowerShell\alias\git.ps1"
+   . "C:\Users\Manuel Morales\Repos\PowerShell\alias\lua.ps1"
    ```
 3. Save and restart PowerShell.
