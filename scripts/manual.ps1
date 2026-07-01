@@ -25,8 +25,8 @@ function Get-RepositoryManualIndex {
         $ast = [System.Management.Automation.Language.Parser]::ParseFile($file.FullName, [ref]$tokens, [ref]$errors)
 
         if ($null -ne $errors) {
-            foreach ($error in $errors) {
-                Write-Verbose "Parse issue in $($file.FullName): $($error.Message)"
+            foreach ($errorMessage in $errors) {
+                Write-Verbose "Parse issue in $($file.FullName): $($errorMessage.Message)"
             }
         }
 
