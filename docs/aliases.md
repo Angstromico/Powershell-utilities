@@ -12,6 +12,23 @@ To use these aliases in your current session or permanently, see the [Installati
 
 ---
 
+## Interactive Manual
+
+The repository also includes [scripts/manual.ps1](../scripts/manual.ps1), which provides a man-page-style reference for both aliases and functions. It scans the repository automatically, shows a full overview with `help` or `man`, and displays detailed documentation for a specific command such as `help gco` or `man Invoke-GitCheckoutRemote`.
+
+Example usage:
+
+```powershell
+. ./scripts/manual.ps1
+help
+help gco
+man Invoke-GitCheckoutRemote
+```
+
+This manual is especially useful when you want to browse the repository's commands without reading each script file manually.
+
+---
+
 ## Available Aliases
 
 ### Native Curl Override (`alias/curl.ps1`)

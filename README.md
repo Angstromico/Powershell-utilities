@@ -18,6 +18,7 @@ C:\Users\Manuel Morales\Repos\PowerShell\
 ├── scripts/
 │   ├── files.ps1
 │   ├── git.ps1
+│   ├── manual.ps1
 │   ├── programs.ps1
 │   └── windows.ps1
 ├── README.md
@@ -34,6 +35,26 @@ Detailed documentation for each function category can be found in the `docs/` fo
 - [**File Utilities**](docs/files.md) - Exclude-based recursive copying and other file management tasks.
 - [**Programs Utilities**](docs/programs.md) - Launching Vim from a Git-for-Windows path and other program shortcuts.
 - [**Aliases**](docs/aliases.md) - Override default native behaviors (curl) and shorten standard workflows (git).
+
+## Interactive Manual
+
+The repository also includes [scripts/manual.ps1](scripts/manual.ps1), a terminal-friendly manual system inspired by Unix `man` pages. It automatically discovers the repository's custom aliases and functions, resolves alias-to-function relationships, and renders documentation for either the full index or a specific command.
+
+Load it in your session with:
+
+```powershell
+. ./scripts/manual.ps1
+```
+
+Then use:
+
+```powershell
+help
+help Invoke-GitCheckoutRemote
+man gco
+```
+
+The manual is generated dynamically from the repository files, so newly added aliases or functions appear automatically.
 
 ## Aliases
 
