@@ -231,4 +231,42 @@ function gps {
     git push --force-with-lease
 }
 
+function New-GitHubSSHKey {
+    param(
+        [Parameter(Mandatory)]
+        [string]$Email,
+
+        [string]$KeyName = "id_ed25519_github"
+    )
+
+    $SSHPath = Join-Path $HOME ".ssh"
+    $KeyFile = Join-Path $SSHPath $KeyName
+
+    if (-not (Test-Path $SSHPath)) {
+        New-Item -ItemType Directory -Path $SSHPath | Out-Null
+    }
+
+    if (Test-Path $KeyFile) {
+        Write-Host "La clave ya existe: $KeyFile" -ForegroundColor Yellow
+        return
+    }
+
+    ssh-keygen -t ed25519 -C $Email -f $KeyFile
+
+    $Agent = Get-Service ssh-agent -ErrorAction SilentlyContinue
+
+    if ($Agent.Status -ne 'Running') {
+        Set-Service ssh-agent -StartupType Automatic
+        Start-Service ssh-agent
+    }
+
+    ssh-add $KeyFile
+
+    Write-Host "`nClave creada:" -ForegroundColor Green
+    Write-Host $KeyFile
+
+    Write-Host "`nContenido de la clave publica:" -ForegroundColor Cyan
+    Get-Content "${KeyFile}.pub"
+}
+
 
