@@ -291,7 +291,7 @@ function New-GitHubSSHKey {
 
 
 
-unction Set-GitProfile {
+function Set-GitProfile {
     param(
         [Parameter(Mandatory)]
         [string]$UserName,
