@@ -231,6 +231,26 @@ function gps {
     git push --force-with-lease
 }
 
+<#
+.SYNOPSIS
+Creates a new GitHub SSH key pair and adds it to the SSH agent.
+
+.DESCRIPTION
+Generates an ed25519 SSH key in the user's .ssh folder, starts the SSH agent if needed,
+and adds the private key so GitHub authentication can be used in the current session.
+
+.PARAMETER Email
+The email address to associate with the new SSH key.
+
+.PARAMETER KeyName
+The file name for the generated key. Defaults to id_ed25519_github.
+
+.EXAMPLE
+New-GitHubSSHKey -Email "name@example.com"
+
+.EXAMPLE
+New-GitHubSSHKey -Email "name@example.com" -KeyName "github_work"
+#>
 function New-GitHubSSHKey {
     param(
         [Parameter(Mandatory)]
