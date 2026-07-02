@@ -290,3 +290,72 @@ function New-GitHubSSHKey {
 }
 
 
+
+unction Set-GitProfile {
+    param(
+        [Parameter(Mandatory)]
+        [string]$UserName,
+
+        [Parameter(Mandatory)]
+        [string]$Email,
+
+        [Parameter(Mandatory)]
+        [string]$SshAlias
+    )
+
+    # Update Git identity
+    git config --global user.name $UserName
+    git config --global user.email $Email
+
+    # Update origin if we are inside a repo
+    if (git rev-parse --is-inside-work-tree 2>$null) {
+
+        $url = git remote get-url origin 2>$null
+
+        if ($url) {
+
+            if ($url -match 'github[^:]*:(.+)$') {
+                $repoPath = $Matches[1]
+
+                git remote set-url origin "git@$SshAlias`:$repoPath"
+
+                Write-Host "Origin updated:" -ForegroundColor Green
+                Write-Host "git@$SshAlias`:$repoPath"
+            }
+        }
+    }
+
+    Write-Host ""
+    Write-Host "Git configured:" -ForegroundColor Green
+    Write-Host "  UserName : $UserName"
+    Write-Host "  Email    : $Email"
+    Write-Host "  SSH Host : $SshAlias"
+}
+
+
+
+function Use-GitPersonal {
+    Set-GitProfile `
+        -UserName "Angstromico" `
+        -Email "manuesteban1990@gmail.com" `
+        -SshAlias "github-personal"
+}
+
+function Use-GitWork {
+    Set-GitProfile `
+        -UserName "MMoralesZuarez" `
+        -Email "mmorales@grupoconex.net" `
+        -SshAlias "github-work"
+}
+
+
+function Get-GitIdentity {
+    [PSCustomObject]@{
+        UserName = git config --global user.name
+        Email    = git config --global user.email
+    }
+}
+
+
+
+
