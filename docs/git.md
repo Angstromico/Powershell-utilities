@@ -204,6 +204,96 @@ This command executes `git push --force-with-lease`. It is recommended over a st
 
 ---
 
+### `Set-GitProfile`
+
+Configures your global Git identity and updates the local repository remote to use a specific SSH alias if applicable:
+
+- Sets global `git config user.name` and `git config user.email`
+- When run inside a repository, rewrites `origin` to use the provided SSH alias for GitHub URLs
+- Makes switching between multiple GitHub accounts easier
+
+**Usage:**
+
+```powershell
+. ./scripts/git.ps1
+Set-GitProfile -UserName "Jane Doe" -Email "jane@work.com" -SshAlias "github-work"
+```
+
+**Parameters:**
+
+- `-UserName` (required): Global Git username
+- `-Email` (required): Global Git email
+- `-SshAlias` (required): SSH host alias to use for the repository origin URL
+
+**Example:**
+
+```powershell
+Set-GitProfile -UserName "Angstromico" -Email "manuesteban1990@gmail.com" -SshAlias "github-personal"
+```
+
+---
+
+### `Use-GitPersonal`
+
+A convenience wrapper that configures Git for the personal account:
+
+- Sets global Git name to `Angstromico`
+- Sets global Git email to `manuesteban1990@gmail.com`
+- Sets SSH alias to `github-personal`
+
+**Usage:**
+
+```powershell
+. ./scripts/git.ps1
+Use-GitPersonal
+```
+
+**Description:**
+This function calls `Set-GitProfile` with your personal account values.
+
+---
+
+### `Use-GitWork`
+
+A convenience wrapper that configures Git for the work account:
+
+- Sets global Git name to `MMoralesZuarez`
+- Sets global Git email to `mmorales@grupoconex.net`
+- Sets SSH alias to `github-work`
+
+**Usage:**
+
+```powershell
+. ./scripts/git.ps1
+Use-GitWork
+```
+
+**Description:**
+This function calls `Set-GitProfile` with your work account values.
+
+---
+
+### `Get-GitIdentity`
+
+Retrieves the current global Git identity from your local configuration:
+
+- Returns `UserName` and `Email` as a PowerShell object
+
+**Usage:**
+
+```powershell
+. ./scripts/git.ps1
+Get-GitIdentity
+```
+
+**Example:**
+
+```powershell
+Get-GitIdentity | Format-List
+```
+
+---
+
 ### `New-GitHubSSHKey`
 
 Creates a new SSH key for GitHub authentication and loads it into the SSH agent:

@@ -291,6 +291,30 @@ function New-GitHubSSHKey {
 
 
 
+<#
+.SYNOPSIS
+Configures the global Git identity and optionally updates the current repository's origin URL to use a chosen SSH alias.
+
+.DESCRIPTION
+Sets `git config --global user.name` and `git config --global user.email` for the current user.
+If invoked inside a Git repository, it also rewrites the `origin` remote to use the provided SSH alias when the URL matches a GitHub SSH pattern.
+This is useful for switching between personal and work GitHub accounts.
+
+.PARAMETER UserName
+The global Git username.
+
+.PARAMETER Email
+The global Git email.
+
+.PARAMETER SshAlias
+The SSH hostname alias to use for the repository's origin remote.
+
+.EXAMPLE
+Set-GitProfile -UserName "Jane Doe" -Email "jane@work.com" -SshAlias "github-work"
+
+.EXAMPLE
+Set-GitProfile -UserName "John Doe" -Email "john@personal.com" -SshAlias "github-personal"
+#>
 function Set-GitProfile {
     param(
         [Parameter(Mandatory)]
@@ -349,6 +373,16 @@ function Use-GitWork {
 }
 
 
+<#
+.SYNOPSIS
+Retrieves the current global Git identity.
+
+.DESCRIPTION
+Returns the global Git `user.name` and `user.email` values as a PSCustomObject.
+
+.EXAMPLE
+Get-GitIdentity
+#>
 function Get-GitIdentity {
     [PSCustomObject]@{
         UserName = git config --global user.name
