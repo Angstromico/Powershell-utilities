@@ -141,3 +141,61 @@ function Clear-SystemJunk {
         Write-Host "System cleanup complete!" -ForegroundColor Cyan
     }
 }
+
+function Stop-LocalServer {
+    <#
+    .SYNOPSIS
+        Kills a process listening on a specific local port.
+
+    .DESCRIPTION
+        Finds and terminates the process that is listening on the specified port.
+        Useful for freeing up ports when a local development server is already in use.
+
+    .PARAMETER Port
+        The port number to check for an active listener.
+
+    .EXAMPLE
+        Stop-LocalServer -Port 5000
+        Kills the process listening on port 5000.
+
+    .EXAMPLE
+        Stop-LocalServer 3000
+        Kills the process listening on port 3000.
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        [ValidateRange(1, 65535)]
+        [int]$Port
+    )
+
+    process {
+        # Find the process listening on the specified port
+        $connection = Get-NetTCPConnection -LocalPort $Port -ErrorAction SilentlyContinue | 
+                      Where-Object { $_.State -eq 'Listen' } | 
+                      Select-Object -First 1
+
+        if (-not $connection) {
+            Write-Warning "No process found listening on port $Port."
+            return
+        }
+
+        $processId = $connection.OwningProcess
+        $process = Get-Process -Id $processId -ErrorAction SilentlyContinue
+
+        if (-not $process) {
+            Write-Warning "Process with ID $processId not found."
+            return
+        }
+
+        Write-Host "Found '$($process.ProcessName)' (PID: $processId) listening on port $Port" -ForegroundColor Cyan
+
+        try {
+            Stop-Process -Id $processId -Force -ErrorAction Stop
+            Write-Host "Successfully terminated process on port $Port." -ForegroundColor Green
+        }
+        catch {
+            Write-Error "Failed to terminate process: $($_.Exception.Message)"
+        }
+    }
+}
