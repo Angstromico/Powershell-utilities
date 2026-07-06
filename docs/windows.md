@@ -72,3 +72,38 @@ Safely removes temporary files and Windows Update installer caches to free up di
 . ./scripts/windows.ps1
 Clear-SystemJunk
 ```
+
+---
+
+### `Stop-LocalServer`
+
+Terminates the process listening on a specified local port. Useful when a development server is already running and you need to free up the port.
+
+**When to use it:**
+- Port already in use errors when starting a local server
+- Need to quickly kill a running development server
+- Freeing up a port without manually searching for the process
+
+**Usage:**
+```powershell
+. ./scripts/windows.ps1
+Stop-LocalServer -Port <port_number>
+```
+
+**Parameters:**
+- `-Port` (required): The port number to check (1-65535)
+
+**Examples:**
+```powershell
+# Kill process on port 5000
+Stop-LocalServer -Port 5000
+
+# Kill process on port 3000 (short form)
+Stop-LocalServer 3000
+```
+
+**Output:**
+```text
+Found 'node' (PID: 12345) listening on port 5000
+Successfully terminated process on port 5000.
+```
