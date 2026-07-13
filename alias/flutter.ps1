@@ -1,0 +1,1 @@
+Set-Alias flutter-run C:\dev\flutter\bin\flutter.bat
