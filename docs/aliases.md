@@ -62,6 +62,16 @@ This script creates a `lua` alias that points to `lua55`, which can be useful wh
 
 ---
 
+### Flutter Alias (`alias/flutter.ps1`)
+
+This alias defines `flutter-run` to invoke the locally installed Flutter CLI executable directly from PowerShell.
+
+- **Command**: `flutter-run`
+- **Maps to**: `C:\dev\flutter\bin\flutter.bat`
+- **Purpose**: Provides a consistent PowerShell alias for running Flutter commands without relying on a global PATH entry.
+
+---
+
 ## Installation and Usage
 
 To make these aliases available, dot-source them in your PowerShell profile or current session.
