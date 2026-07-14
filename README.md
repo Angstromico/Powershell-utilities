@@ -34,6 +34,7 @@ Detailed documentation for each function category can be found in the `docs/` fo
 - [**Windows Utilities**](docs/windows.md) - System cleanup, icon cache resets, and hardware summaries.
 - [**File Utilities**](docs/files.md) - Exclude-based recursive copying and other file management tasks.
 - [**Programs Utilities**](docs/programs.md) - Launching Vim from a Git-for-Windows path and other program shortcuts.
+- [**Flutter Utilities**](docs/flutter.md) - Flutter project refresh and alias shortcuts.
 - [**Aliases**](docs/aliases.md) - Override default native behaviors (curl) and shorten standard workflows (git).
 
 ## Interactive Manual

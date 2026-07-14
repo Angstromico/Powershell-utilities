@@ -70,6 +70,8 @@ This alias defines `flutter-run` to invoke the locally installed Flutter CLI exe
 - **Maps to**: `C:\dev\flutter\bin\flutter.bat`
 - **Purpose**: Provides a consistent PowerShell alias for running Flutter commands without relying on a global PATH entry.
 
+For documentation on the `flutter-refresh` function and detailed usage instructions, see [Flutter Utilities](flutter.md).
+
 ---
 
 ## Installation and Usage
