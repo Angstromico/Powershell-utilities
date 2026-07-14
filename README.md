@@ -8,15 +8,20 @@ A collection of PowerShell scripts to simplify CLI workflows and automate common
 C:\Users\Manuel Morales\Repos\PowerShell\
 ├── alias/
 │   ├── curl.ps1
-│   └── git.ps1
+│   ├── flutter.ps1
+│   ├── git.ps1
+│   ├── lua.ps1
+│   └── windows.ps1
 ├── docs/
 │   ├── aliases.md
 │   ├── files.md
+│   ├── flutter.md
 │   ├── git.md
 │   ├── programs.md
 │   └── windows.md
 ├── scripts/
 │   ├── files.ps1
+│   ├── flutter-run.ps1
 │   ├── git.ps1
 │   ├── manual.ps1
 │   ├── programs.ps1
