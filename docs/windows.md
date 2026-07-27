@@ -34,6 +34,29 @@ Reset-IconCache -Verbose
 
 ---
 
+### `NewPsAdmin`
+
+Starts a new elevated PowerShell session using the `RunAs` verb.
+
+**When to use it:**
+
+- When you need to run administrative commands in a separate PowerShell window
+- When you want to quickly relaunch PowerShell with elevated privileges
+
+**Usage:**
+
+```powershell
+. ./scripts/windows.ps1
+NewPsAdmin
+```
+
+**Notes:**
+
+- Windows will prompt for administrator approval through UAC
+- The command opens a new PowerShell process instead of elevating the current session
+
+---
+
 ### `Get-HardwareSummary`
 
 Provides a concise summary of the computer's hardware, including OS version, CPU model, total RAM, GPU, and C: drive space.
