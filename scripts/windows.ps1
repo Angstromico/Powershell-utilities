@@ -72,7 +72,7 @@ function newps {
 }
 
 function NewPsAdmin {
-    Start-Process powershell -Verb RunAs
+    Start-Process powershell -Verb RunAs -WorkingDirectory $PWD
 }
 
 function Get-HardwareSummary {
