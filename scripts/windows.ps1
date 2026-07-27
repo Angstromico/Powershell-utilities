@@ -71,6 +71,10 @@ function newps {
     Start-Process powershell
 }
 
+function NewPsAdmin {
+    Start-Process powershell -Verb RunAs
+}
+
 function Get-HardwareSummary {
     <#
     .SYNOPSIS
