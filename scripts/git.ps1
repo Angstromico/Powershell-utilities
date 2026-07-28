@@ -332,7 +332,8 @@ function Set-GitProfile {
     git config --global user.email $Email
 
     # Update origin if we are inside a repo
-    if (git rev-parse --is-inside-work-tree 2>$null) {
+    $isInsideWorkTree = git rev-parse --is-inside-work-tree 2>$null
+    if ($isInsideWorkTree) {
 
         $url = git remote get-url origin 2>$null
 
