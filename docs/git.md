@@ -327,3 +327,33 @@ New-GitHubSSHKey -Email "developer@example.com" -KeyName "github_work"
 - The key is stored in `$HOME/.ssh`
 - If a key with the same name already exists, the function will stop and warn you instead of overwriting it
 - The public key content is displayed after creation so you can add it to your GitHub account
+
+---
+
+### `glog`
+
+A shortcut to display a compact, colorful topological Git log graph across all branches:
+
+- Displays commit history in topological order (`--topo-order`)
+- Includes all local, remote, and tagged branches (`--all`)
+- Draws a visual ASCII branch graph (`--graph`)
+- Formats dates using local timezone settings (`--date=local`)
+- Colorizes output with short hash, truncated subject line, branch references, author, and date
+
+**Usage:**
+
+```powershell
+glog
+```
+
+**Description:**
+
+This command executes:
+
+```powershell
+git log --topo-order --all --graph --date=local `
+    --pretty=format:"%C(green)%h%C(reset) %<(55,trunc)%s%C(red)%d%C(reset) %C(blue)[%an]%C(reset) %C(yellow)%ad%C(reset)%n"
+```
+
+It provides an easy-to-read, compact visual log graph of the repository history.
+
