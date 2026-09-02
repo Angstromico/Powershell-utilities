@@ -231,6 +231,35 @@ function gps {
     git push --force-with-lease
 }
 
+function Invoke-GitPushUpstream {
+    [CmdletBinding()]
+    param (
+        [ValidateNotNullOrEmpty()]
+        [string]$Branch = "main",
+
+        [ValidateNotNullOrEmpty()]
+        [string]$Remote = "origin"
+    )
+
+    if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+        throw "Git is not installed or not in PATH."
+    }
+
+    $currentBranch = git rev-parse --abbrev-ref HEAD 2>$null
+    if ([string]::IsNullOrEmpty($currentBranch)) {
+        throw "Not inside a Git repository."
+    }
+
+    Write-Host "Pushing $Branch to $Remote and setting its upstream..." -ForegroundColor Blue
+    git push -u $Remote $Branch
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Failed to push $Branch to $Remote."
+    }
+
+    Write-Host "Successfully pushed $Remote/$Branch and configured its upstream." -ForegroundColor Green
+}
+
 <#
 .SYNOPSIS
 Creates a new GitHub SSH key pair and adds it to the SSH agent.

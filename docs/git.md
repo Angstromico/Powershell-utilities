@@ -204,6 +204,42 @@ This command executes `git push --force-with-lease`. It is recommended over a st
 
 ---
 
+### `Invoke-GitPushUpstream`
+
+Pushes a branch to a remote and configures its upstream tracking branch:
+
+- Uses `main` as the default branch
+- Uses `origin` as the default remote
+- Supports pushing another branch when needed
+
+**Usage:**
+
+```powershell
+. ./scripts/git.ps1
+Invoke-GitPushUpstream
+```
+
+This runs:
+
+```powershell
+git push -u origin main
+```
+
+**Parameters:**
+
+- `-Branch` (optional): The local branch to push (default: `"main"`)
+- `-Remote` (optional): The remote name (default: `"origin"`)
+
+**Examples:**
+
+```powershell
+Invoke-GitPushUpstream                         # Pushes origin/main
+Invoke-GitPushUpstream -Branch "develop"      # Pushes origin/develop
+Invoke-GitPushUpstream -Branch "feature/login" -Remote "upstream"
+```
+
+---
+
 ### `Set-GitProfile`
 
 Configures your global Git identity and updates the local repository remote to use a specific SSH alias if applicable:
@@ -356,4 +392,3 @@ git log --topo-order --all --graph --date=local `
 ```
 
 It provides an easy-to-read, compact visual log graph of the repository history.
-
